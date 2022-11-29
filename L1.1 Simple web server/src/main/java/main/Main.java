@@ -7,11 +7,8 @@ import servlets.HelloServlet;
 import java.io.File;
 
 /**
- * @author v.chibrikov
- *         <p>
- *         Пример кода для курса на https://stepic.org/
- *         <p>
- *         Описание курса и лицензия: https://github.com/vitaly-chibrikov/stepic_java_webserver
+ * @author imironov
+ * @since 14.11.2022
  */
 public class Main {
     public static void main(String[] args) throws Exception {
