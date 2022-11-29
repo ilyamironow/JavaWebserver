@@ -2,6 +2,7 @@ package main;
 
 import org.apache.catalina.Context;
 import org.apache.catalina.startup.Tomcat;
+import servlets.HelloServlet;
 
 import java.io.File;
 
