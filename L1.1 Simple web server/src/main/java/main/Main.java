@@ -1,9 +1,9 @@
 package main;
 
-import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.servlet.ServletContextHandler;
-import org.eclipse.jetty.servlet.ServletHolder;
-import servlets.AllRequestsServlet;
+import org.apache.catalina.Context;
+import org.apache.catalina.startup.Tomcat;
+
+import java.io.File;
 
 /**
  * @author v.chibrikov
@@ -14,15 +14,21 @@ import servlets.AllRequestsServlet;
  */
 public class Main {
     public static void main(String[] args) throws Exception {
-        AllRequestsServlet allRequestsServlet = new AllRequestsServlet();
+        Tomcat tomcat = new Tomcat();
+        tomcat.setPort(8080);
+        tomcat.setHostname("localhost");
+        String appBase = ".";
+        tomcat.getHost().setAppBase(appBase);
 
-        ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        context.addServlet(new ServletHolder(allRequestsServlet), "/*");
+        File docBase = new File(System.getProperty("java.io.tmpdir"));
+        Context context = tomcat.addContext("", docBase.getAbsolutePath());
 
-        Server server = new Server(8080);
-        server.setHandler(context);
+        Class<?> servletClass = HelloServlet.class;
+        Tomcat.addServlet(context, servletClass.getSimpleName(), servletClass.getName());
+        context.addServletMappingDecoded(
+            "/my-servlet/*", servletClass.getSimpleName());
 
-        server.start();
-        server.join();
+        tomcat.start();
+        tomcat.getServer().await();
     }
 }
