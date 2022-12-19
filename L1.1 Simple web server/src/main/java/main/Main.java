@@ -16,6 +16,7 @@ public class Main {
         Logger logger = Logger.getLogger(Main.class.getName());
         MirrorServlet mirrorServlet = new MirrorServlet();
 
+        // Adding optional ServletContextHandler.SESSIONS allows for simple construction of a context with session handler.
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.addServlet(new ServletHolder(mirrorServlet), "/mirror");
 
